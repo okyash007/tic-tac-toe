@@ -1,3 +1,5 @@
+import { useDispatch } from "react-redux";
+
 export function calcWinner(board) {
   const winCombos = [
     [0, 1, 2], // top row
@@ -27,8 +29,7 @@ export function pcChance(board) {
     }
   }
   if (nullIndices.length === 0) {
-    console.log("play again");
-    dispatch(setModal());
+    return "play again";
   }
   let randomIndex = nullIndices[Math.floor(Math.random() * nullIndices.length)];
   return randomIndex;

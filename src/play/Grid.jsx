@@ -47,6 +47,9 @@ const Grid = ({ chance, winner, initialChance }) => {
       dispatch(setWinner(calcWinner(buttons)));
       dispatch(setModal());
     }
+    if (pcChance(buttons) === "play again") {
+      dispatch(setModal());
+    }
   }, [chance]);
 
   return (
