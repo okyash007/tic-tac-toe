@@ -14,5 +14,12 @@
   background: #192a32;
   padding: 1.5rem;
   display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
+}
+
+.btns{
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
 }

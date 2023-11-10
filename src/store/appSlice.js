@@ -14,6 +14,9 @@ const appSlice = createSlice({
     setModal: (state) => {
       state.modal = true;
     },
+    closeModal: (state) => {
+      state.modal = false;
+    },
     setChance: (state, action) => {
       state.chance = action.payload;
     },
@@ -26,7 +29,7 @@ const appSlice = createSlice({
   },
 });
 
-export const { setModal, setChance, setWinner, setInitialChance } =
+export const { setModal, setChance, setWinner, setInitialChance, closeModal } =
   appSlice.actions;
 
 export default appSlice.reducer;
