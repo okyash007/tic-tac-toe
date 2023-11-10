@@ -4,8 +4,12 @@ import { GridButton } from "../styled";
 import circle from "../assets/circle.svg";
 import cross from "../assets/cross.svg";
 import useWinner from "../hooks/useWinner";
+import { useDispatch } from "react-redux";
+import { setChance } from "../store/appSlice";
 
-const Grid = () => {
+const Grid = ({ chance }) => {
+  const dispatch = useDispatch();
+
   const [buttons, setButtons] = useState([
     null,
     null,
@@ -18,8 +22,6 @@ const Grid = () => {
     null,
   ]);
 
-  const [chance, setChance] = useState(cross);
-
   function changeButton(value, index) {
     let newButtons = [...buttons];
     newButtons[index] = value;
@@ -28,9 +30,9 @@ const Grid = () => {
 
   function toggleChance() {
     if (chance === circle) {
-      setChance(cross);
-    } else {
-      setChance(circle);
+      dispatch(setChance(cross));
+    } else if (chance === cross) {
+      dispatch(setChance(circle));
     }
   }
 
@@ -47,14 +49,13 @@ const Grid = () => {
     let randomIndex =
       nullIndices[Math.floor(Math.random() * nullIndices.length)];
     changeButton(chance, randomIndex);
-    toggleChance();
   }
 
-  console.log(useWinner(buttons));
-
-  if (chance === circle) {
-    pcChance(chance);
-  }
+  // if (chance === circle) {
+  //   pcChance(chance);
+  //   console.log(chance);
+  //   toggleChance();
+  // }
 
   return (
     <div className={styles.grid}>
