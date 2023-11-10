@@ -1,4 +1,5 @@
-export default function useWinner(board) {
+
+export function calcWinner(board, fn) {
   const winCombos = [
     [0, 1, 2], // top row
     [3, 4, 5], // middle row
@@ -13,6 +14,7 @@ export default function useWinner(board) {
   for (let i = 0; i < winCombos.length; i++) {
     let [a, b, c] = winCombos[i];
     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+      fn();
       return board[a];
     }
   }

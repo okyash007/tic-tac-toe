@@ -7,17 +7,21 @@ const appSlice = createSlice({
   initialState: {
     modal: false,
     chance: cross,
+    winner: null,
   },
   reducers: {
-    setModal: (state, action) => {
-      state.modal = !state.modal;
+    setModal: (state) => {
+      state.modal = true;
     },
     setChance: (state, action) => {
       state.chance = action.payload;
     },
+    setWinner: (state, action) => {
+      state.winner = action.payload;
+    },
   },
 });
 
-export const { setModal, setChance } = appSlice.actions;
+export const { setModal, setChance, setWinner } = appSlice.actions;
 
 export default appSlice.reducer;

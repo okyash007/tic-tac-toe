@@ -6,13 +6,16 @@ import cross from "../assets/cross.svg";
 import refresh from "../assets/refresh.svg";
 import { Refresh } from "../styled";
 import { useSelector } from "react-redux";
+import Modal from "../modal/Modal";
 
 const Play = () => {
-  const chance = useSelector((store) => store.app.chance);
-
+  const store = useSelector((store) => store.app);
+  const modal = store.modal;
 
   return (
     <>
+      {modal && <Modal img={circle} />}
+
       <div className={styles.box}>
         <div className={styles.top}>
           <div className={styles.icon}>
@@ -26,7 +29,7 @@ const Play = () => {
             <img src={refresh} alt="" />
           </Refresh>
         </div>
-        <Grid chance={chance} />
+        <Grid chance={store.chance} winner={store.winner} />
       </div>
     </>
   );

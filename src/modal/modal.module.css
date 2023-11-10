@@ -12,5 +12,7 @@
 
 .card {
   background: #192a32;
-  padding: 3rem;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-evenly;
 }
