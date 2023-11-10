@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { setChance } from "../store/appSlice";
 
 const Grid = ({ chance }) => {
+  console.log(chance);
   const dispatch = useDispatch();
 
   const [buttons, setButtons] = useState([
@@ -29,14 +30,14 @@ const Grid = ({ chance }) => {
   }
 
   function toggleChance() {
-    if (chance === circle) {
-      dispatch(setChance(cross));
-    } else if (chance === cross) {
+    if (chance === cross) {
       dispatch(setChance(circle));
+    } else {
+      dispatch(setChance(cross));
     }
   }
 
-  function pcChance(chance) {
+  function pcChance() {
     let nullIndices = [];
     for (let i = 0; i < buttons.length; i++) {
       if (buttons[i] === null) {
@@ -48,14 +49,15 @@ const Grid = ({ chance }) => {
     }
     let randomIndex =
       nullIndices[Math.floor(Math.random() * nullIndices.length)];
-    changeButton(chance, randomIndex);
+    return randomIndex;
   }
 
-  // if (chance === circle) {
-  //   pcChance(chance);
-  //   console.log(chance);
-  //   toggleChance();
-  // }
+  if (chance === circle) {
+    // changeButton(chance, pcChance(chance));
+    console.log(pcChance(chance));
+    setButtons(chance, pcChance());
+    toggleChance();
+  }
 
   return (
     <div className={styles.grid}>
