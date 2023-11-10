@@ -5,8 +5,9 @@ import circle from "../assets/circle.svg";
 import cross from "../assets/cross.svg";
 import { useDispatch } from "react-redux";
 import { setChance, setModal, setWinner } from "../store/appSlice";
+import { calcWinner, pcChance } from "../helper";
 
-const Grid = ({ chance, winner }) => {
+const Grid = ({ chance, winner, initialChance }) => {
   const dispatch = useDispatch();
 
   const [buttons, setButtons] = useState(Array(9).fill(null));
@@ -27,55 +28,25 @@ const Grid = ({ chance, winner }) => {
     }
   }
 
-  function pcChance() {
-    let nullIndices = [];
-    for (let i = 0; i < buttons.length; i++) {
-      if (buttons[i] === null) {
-        nullIndices.push(i);
-      }
+  function crossOrCircle(input) {
+    if (input === cross) {
+      return circle;
+    } else if (input === circle) {
+      return cross;
     }
-    if (nullIndices.length === 0) {
-      console.log("play again");
-      dispatch(setModal());
-    }
-    let randomIndex =
-      nullIndices[Math.floor(Math.random() * nullIndices.length)];
-    return randomIndex;
-  }
-
-  function calcWinner(board) {
-    const winCombos = [
-      [0, 1, 2], // top row
-      [3, 4, 5], // middle row
-      [6, 7, 8], // bottom row
-      [0, 3, 6], // left column
-      [1, 4, 7], // middle column
-      [2, 5, 8], // right column
-      [0, 4, 8], // main diagonal
-      [2, 4, 6], // anti-diagonal
-    ];
-
-    for (let i = 0; i < winCombos.length; i++) {
-      let [a, b, c] = winCombos[i];
-      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-        dispatch(setWinner(board[a]));
-        dispatch(setModal());
-        return board[a];
-      }
-      // else if(  ) {
-      //   dispatch(setModal());
-      // }
-    }
-    return null;
   }
 
   useEffect(() => {
-    if (chance === circle) {
-      const pcIndex = pcChance();
+    if (chance === crossOrCircle(initialChance)) {
+      const pcIndex = pcChance(buttons);
       changeButton(chance, pcIndex);
       toggleChance();
     }
     calcWinner(buttons);
+    if (calcWinner(buttons) !== null) {
+      dispatch(setWinner(calcWinner(buttons)));
+      dispatch(setModal());
+    }
   }, [chance]);
 
   return (

@@ -1,5 +1,4 @@
-
-export function calcWinner(board, fn) {
+export function calcWinner(board) {
   const winCombos = [
     [0, 1, 2], // top row
     [3, 4, 5], // middle row
@@ -14,9 +13,23 @@ export function calcWinner(board, fn) {
   for (let i = 0; i < winCombos.length; i++) {
     let [a, b, c] = winCombos[i];
     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-      fn();
       return board[a];
     }
   }
   return null;
+}
+
+export function pcChance(board) {
+  let nullIndices = [];
+  for (let i = 0; i < board.length; i++) {
+    if (board[i] === null) {
+      nullIndices.push(i);
+    }
+  }
+  if (nullIndices.length === 0) {
+    console.log("play again");
+    dispatch(setModal());
+  }
+  let randomIndex = nullIndices[Math.floor(Math.random() * nullIndices.length)];
+  return randomIndex;
 }

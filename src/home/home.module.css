@@ -1,0 +1,70 @@
+.box {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.box button {
+  margin: 0.5rem 0;
+}
+
+.select {
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background-color: #1f3540;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  margin: 0.5rem 0;
+}
+
+.select h1 {
+  margin: 1rem 0;
+}
+
+.invitebtn {
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.radio_inputs {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 0.5rem;
+  background-color: #192a32;
+  box-sizing: border-box;
+  box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+  padding: 0.5rem;
+  font-size: 14px;
+}
+
+.radio_inputs .radio {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.radio_inputs .radio input {
+  display: none;
+}
+
+.radio_inputs .radio .name {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: none;
+  padding: 0.25rem 0;
+  color: rgba(51, 65, 85, 1);
+  transition: all 0.15s ease-in-out;
+}
+
+.radio_inputs .radio input:checked + .name {
+  background-color: #d9d9d9;
+}
+
+.radio_inputs .radio input:checked + .name path {
+  fill: #192a32;
+  stroke: #192a32;
+}
