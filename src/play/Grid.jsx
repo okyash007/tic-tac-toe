@@ -3,14 +3,12 @@ import styles from "./play.module.css";
 import { GridButton } from "../styled";
 import circle from "../assets/circle.svg";
 import cross from "../assets/cross.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setChance, setModal, setWinner } from "../store/appSlice";
 import { calcWinner, pcChance } from "../helper";
 
-const Grid = ({ chance, winner, initialChance }) => {
+const Grid = ({ chance, winner, initialChance, buttons, setButtons }) => {
   const dispatch = useDispatch();
-
-  const [buttons, setButtons] = useState(Array(9).fill(null));
 
   function changeButton(value, index) {
     setButtons((prevButtons) => {

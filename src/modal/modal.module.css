@@ -18,8 +18,24 @@
   justify-content: space-evenly;
 }
 
-.btns{
+.btns {
   display: flex;
   justify-content: space-around;
+  padding: 1rem 2rem;
+}
+
+.headings {
   padding: 1rem;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.won {
+  display: flex;
+  justify-content: center;
+}
+
+.won p {
+  color: #acc2cd;
+  font-weight: 600;
 }

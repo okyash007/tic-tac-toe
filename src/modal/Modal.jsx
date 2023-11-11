@@ -11,7 +11,7 @@ import {
   setWinner,
 } from "../store/appSlice";
 
-const Modal = () => {
+const Modal = ({ setButtons }) => {
   const store = useSelector((store) => store.app);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,14 +19,21 @@ const Modal = () => {
   return (
     <div className={styles.box}>
       <div className={styles.card}>
-        {store.winner ? (
-          <>
-            <img src={store.winner} alt="" width={25} />
-            <Heading $color="#F2B237">takes the round</Heading>
-          </>
-        ) : (
-          <Heading $color="#F2B237">Do you want to quit ?</Heading>
-        )}
+        <div className={styles.won}>
+          {store.winner === store.initialChance && <p>YOU WON!</p>}
+          {store.winner !== store.initialChance && <p>YOU LOSE!</p>}
+          {store.winner === null && <p>TIE</p>}
+        </div>
+        <div className={styles.headings}>
+          {store.winner ? (
+            <>
+              <img src={store.winner} alt="" width={40} />
+              <Heading $color="#F2B237">takes the round</Heading>
+            </>
+          ) : (
+            <Heading $color="#F2B237">Do you want to quit ?</Heading>
+          )}
+        </div>
         <div className={styles.btns}>
           <ColorButton
             $bgColor="#F2B237"
@@ -35,6 +42,7 @@ const Modal = () => {
               dispatch(setInitialChance(null));
               dispatch(setWinner(null));
               dispatch(closeModal());
+              setButtons(Array(9).fill(null));
               navigate("/");
             }}
           >
@@ -45,6 +53,8 @@ const Modal = () => {
             onClick={() => {
               dispatch(setWinner(null));
               dispatch(closeModal());
+              setButtons(Array(9).fill(null));
+              navigate("/play");
             }}
           >
             Play Again

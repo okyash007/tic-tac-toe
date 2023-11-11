@@ -11,6 +11,8 @@ import { setModal } from "../store/appSlice";
 import { useNavigate } from "react-router-dom";
 
 const Play = () => {
+  const [buttons, setButtons] = useState(Array(9).fill(null));
+
   const store = useSelector((store) => store.app);
   const modal = store.modal;
 
@@ -25,7 +27,7 @@ const Play = () => {
 
   return (
     <>
-      {modal && <Modal img={circle} />}
+      {modal && <Modal setButtons={setButtons} />}
       <div className={styles.box}>
         <div className={styles.top}>
           <div className={styles.icon}>
@@ -43,6 +45,8 @@ const Play = () => {
           chance={store.chance}
           initialChance={store.initialChance}
           winner={store.winner}
+          buttons={buttons}
+          setButtons={setButtons}
         />
       </div>
     </>
