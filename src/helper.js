@@ -1,4 +1,6 @@
 import { useDispatch } from "react-redux";
+import circle from "./assets/circle.svg";
+import cross from "./assets/cross.svg";
 
 export function calcWinner(board) {
   const winCombos = [
@@ -33,4 +35,12 @@ export function pcChance(board) {
   }
   let randomIndex = nullIndices[Math.floor(Math.random() * nullIndices.length)];
   return randomIndex;
+}
+
+export function crossOrCircle(input) {
+  if (input === cross) {
+    return circle;
+  } else if (input === circle) {
+    return cross;
+  }
 }

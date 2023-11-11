@@ -10,19 +10,24 @@ import {
   setModal,
   setWinner,
 } from "../store/appSlice";
+import circle from "../assets/circle.svg";
+import cross from "../assets/cross.svg";
+import { crossOrCircle } from "../helper";
 
 const Modal = ({ setButtons }) => {
   const store = useSelector((store) => store.app);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+
   return (
     <div className={styles.box}>
       <div className={styles.card}>
         <div className={styles.won}>
           {store.winner === store.initialChance && <p>YOU WON!</p>}
-          {store.winner !== store.initialChance && <p>YOU LOSE!</p>}
-          {store.winner === null && <p>TIE</p>}
+          {store.winner === crossOrCircle(store.initialChance) && (
+            <p>YOU LOSE!</p>
+          )}
         </div>
         <div className={styles.headings}>
           {store.winner ? (
