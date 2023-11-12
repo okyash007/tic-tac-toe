@@ -7,8 +7,9 @@ import refresh from "../assets/refresh.svg";
 import { Refresh } from "../styled";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../modal/Modal";
-import { setModal } from "../store/appSlice";
+import { incLose, incTies, incWins, setModal } from "../store/appSlice";
 import { useNavigate } from "react-router-dom";
+import { crossOrCircle, pcChance } from "../helper";
 
 const Play = () => {
   const [buttons, setButtons] = useState(Array(9).fill(null));
@@ -24,6 +25,18 @@ const Play = () => {
       navigate("/");
     }
   }, []);
+
+  useEffect(() => {
+    if (store.winner) {
+      if (store.winner === store.initialChance) {
+        dispatch(incWins());
+      } else if (store.winner === crossOrCircle(store.initialChance)) {
+        dispatch(incLose());
+      } else if (store.winner === "tie") {
+        dispatch(incTies());
+      }
+    }
+  }, [store.winner]);
 
   return (
     <>
@@ -48,6 +61,20 @@ const Play = () => {
           buttons={buttons}
           setButtons={setButtons}
         />
+        <div className={styles.bottom}>
+          <div className={styles.win}>
+            <p> { store.initialChance === cross && 'X' } { store.initialChance === circle && 'O' } (YOU)</p>
+            <p className={styles.score}>{store.score.wins}</p>
+          </div>
+          <div className={styles.tie}>
+            <p>TIES</p>
+            <p className={styles.score}>{store.score.ties}</p>
+          </div>
+          <div className={styles.lose}>
+            <p>{ store.initialChance === cross && 'O' } { store.initialChance === circle && 'X' }(CPU)</p>
+            <p className={styles.score}>{store.score.lose}</p>
+          </div>
+        </div>
       </div>
     </>
   );

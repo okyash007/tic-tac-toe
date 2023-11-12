@@ -19,6 +19,13 @@ const Modal = ({ setButtons }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // let color = null
+
+  // if (store.winner === circle) {
+  //   color = "#F2B237";
+  // } else if (store.winner === cross) {
+  //   color = "#32C4C3";
+  // }
 
   return (
     <div className={styles.box}>
@@ -30,13 +37,15 @@ const Modal = ({ setButtons }) => {
           )}
         </div>
         <div className={styles.headings}>
-          {store.winner ? (
+          {(!store.winner || store.winner === "tie") && (
+            <Heading $color="#F2B237">Do you want to quit ?</Heading>
+          )}
+
+          {store.winner && store.winner !== "tie" && (
             <>
               <img src={store.winner} alt="" width={40} />
               <Heading $color="#F2B237">takes the round</Heading>
             </>
-          ) : (
-            <Heading $color="#F2B237">Do you want to quit ?</Heading>
           )}
         </div>
         <div className={styles.btns}>

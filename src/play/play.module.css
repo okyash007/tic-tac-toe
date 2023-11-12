@@ -1,7 +1,6 @@
 .box {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
   padding: 3rem;
 }
@@ -35,4 +34,39 @@
 
 .icon img {
   width: 1rem;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bottom div {
+  width: 5rem;
+  height: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+}
+
+.bottom div p{
+  font-size: 0.75rem
+}
+
+.score{
+  font-weight: 600;
+}
+
+.win {
+  background-color: #31c4be;
+}
+
+.tie {
+  background-color: #a8bec9;
+}
+
+.lose {
+  background-color: #f2b237;
 }

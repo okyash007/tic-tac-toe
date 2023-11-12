@@ -4,11 +4,20 @@ import { GridButton } from "../styled";
 import circle from "../assets/circle.svg";
 import cross from "../assets/cross.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { setChance, setModal, setWinner } from "../store/appSlice";
+import {
+  incLose,
+  incTies,
+  incWins,
+  setChance,
+  setModal,
+  setWinner,
+} from "../store/appSlice";
 import { calcWinner, crossOrCircle, pcChance } from "../helper";
 
 const Grid = ({ chance, winner, initialChance, buttons, setButtons }) => {
   const dispatch = useDispatch();
+
+  const result = calcWinner(buttons);
 
   function changeButton(value, index) {
     setButtons((prevButtons) => {
@@ -32,15 +41,18 @@ const Grid = ({ chance, winner, initialChance, buttons, setButtons }) => {
       changeButton(chance, pcIndex);
       toggleChance();
     }
-    calcWinner(buttons);
+  }, [chance]);
+
+  useEffect(() => {
+    console.log(calcWinner(buttons));
     if (calcWinner(buttons) !== null) {
       dispatch(setWinner(calcWinner(buttons)));
       dispatch(setModal());
-    }
-    if (pcChance(buttons) === "play again") {
+    } else if (pcChance(buttons) === "play again") {
+      dispatch(setWinner("tie"));
       dispatch(setModal());
     }
-  }, [chance]);
+  }, [buttons]);
 
   return (
     <div className={styles.grid}>

@@ -23,3 +23,11 @@
   align-items: center;
   position: relative;
 }
+
+@media only screen and (max-width: 425px) {
+  .screen {
+    width: 100vw;
+    margin: 0;
+    border-radius: 0;
+  }
+}
