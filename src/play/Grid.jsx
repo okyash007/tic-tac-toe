@@ -1,23 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styles from "./play.module.css";
 import { GridButton } from "../styled";
 import circle from "../assets/circle.svg";
 import cross from "../assets/cross.svg";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  incLose,
-  incTies,
-  incWins,
-  setChance,
-  setModal,
-  setWinner,
-} from "../store/appSlice";
+import { useDispatch } from "react-redux";
+import { setChance, setModal, setWinner } from "../store/appSlice";
 import { calcWinner, crossOrCircle, pcChance } from "../helper";
 
-const Grid = ({ chance, winner, initialChance, buttons, setButtons }) => {
+const Grid = ({ chance, initialChance, buttons, setButtons }) => {
   const dispatch = useDispatch();
-
-  const result = calcWinner(buttons);
 
   function changeButton(value, index) {
     setButtons((prevButtons) => {
@@ -44,7 +35,6 @@ const Grid = ({ chance, winner, initialChance, buttons, setButtons }) => {
   }, [chance]);
 
   useEffect(() => {
-    console.log(calcWinner(buttons));
     if (calcWinner(buttons) !== null) {
       dispatch(setWinner(calcWinner(buttons)));
       dispatch(setModal());
