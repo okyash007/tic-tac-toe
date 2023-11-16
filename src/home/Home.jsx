@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ColorButton, Heading } from "../styled";
 import styles from "./home.module.css";
 import Choice from "./Choice";
@@ -8,6 +8,13 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const store = useSelector((store) => store.app);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (store.chance && store.initialChance) {
+      navigate("/play");
+    }
+  }, []);
+
   return (
     <div className={styles.box}>
       <div className={styles.select}>

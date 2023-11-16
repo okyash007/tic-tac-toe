@@ -5,9 +5,10 @@ import cross from "../assets/cross.svg";
 const appSlice = createSlice({
   name: "app",
   initialState: {
+    buttons: JSON.parse(localStorage.getItem("buttons")) || Array(9).fill(null),
     modal: false,
-    chance: null,
-    initialChance: null,
+    chance: JSON.parse(localStorage.getItem("initialChance")),
+    initialChance: JSON.parse(localStorage.getItem("initialChance")),
     winner: null,
     score: JSON.parse(localStorage.getItem("score")) || {
       wins: 0,
@@ -16,6 +17,14 @@ const appSlice = createSlice({
     },
   },
   reducers: {
+    setButtonsRedux: (state, action) => {
+      state.buttons = action.payload;
+      localStorage.setItem("buttons", JSON.stringify(state.buttons));
+    },
+    resetButtons: (state) => {
+      state.buttons = Array(9).fill(null);
+      localStorage.setItem("buttons", JSON.stringify(state.buttons));
+    },
     setModal: (state) => {
       state.modal = true;
     },
@@ -27,6 +36,10 @@ const appSlice = createSlice({
     },
     setInitialChance: (state, action) => {
       state.initialChance = action.payload;
+      localStorage.setItem(
+        "initialChance",
+        JSON.stringify(state.initialChance)
+      );
     },
     setWinner: (state, action) => {
       state.winner = action.payload;
@@ -43,10 +56,19 @@ const appSlice = createSlice({
       state.score.lose = state.score.lose + 1;
       localStorage.setItem("score", JSON.stringify(state.score));
     },
+    resetScore: (state) => {
+      state.score = {
+        wins: 0,
+        ties: 0,
+        lose: 0,
+      };
+      localStorage.setItem("score", JSON.stringify(state.score));
+    },
   },
 });
 
 export const {
+  setButtonsRedux,
   setModal,
   setChance,
   setWinner,
@@ -55,6 +77,8 @@ export const {
   incWins,
   incTies,
   incLose,
+  resetScore,
+  resetButtons,
 } = appSlice.actions;
 
 export default appSlice.reducer;

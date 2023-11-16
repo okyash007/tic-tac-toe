@@ -3,19 +3,24 @@ import styles from "./play.module.css";
 import { GridButton } from "../styled";
 import circle from "../assets/circle.svg";
 import cross from "../assets/cross.svg";
-import { useDispatch } from "react-redux";
-import { setChance, setModal, setWinner } from "../store/appSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setButtonsRedux,
+  setChance,
+  setModal,
+  setWinner,
+} from "../store/appSlice";
 import { calcWinner, crossOrCircle, pcChance } from "../helper";
 
-const Grid = ({ chance, initialChance, buttons, setButtons }) => {
+const Grid = ({ chance, initialChance }) => {
+  const store = useSelector((store) => store.app);
+
   const dispatch = useDispatch();
 
-  function changeButton(value, index) {
-    setButtons((prevButtons) => {
-      const newButtons = [...prevButtons];
-      newButtons[index] = value;
-      return newButtons;
-    });
+  function changeButtonRedux(value, index) {
+    const newButtonsRedux = [...store.buttons];
+    newButtonsRedux[index] = value;
+    dispatch(setButtonsRedux(newButtonsRedux));
   }
 
   function toggleChance() {
@@ -28,30 +33,30 @@ const Grid = ({ chance, initialChance, buttons, setButtons }) => {
 
   useEffect(() => {
     if (chance === crossOrCircle(initialChance)) {
-      const pcIndex = pcChance(buttons);
-      changeButton(chance, pcIndex);
+      const pcIndex = pcChance(store.buttons);
+      changeButtonRedux(chance, pcIndex);
       toggleChance();
     }
   }, [chance]);
 
   useEffect(() => {
-    if (calcWinner(buttons) !== null) {
-      dispatch(setWinner(calcWinner(buttons)));
+    if (calcWinner(store.buttons) !== null) {
+      dispatch(setWinner(calcWinner(store.buttons)));
       dispatch(setModal());
-    } else if (pcChance(buttons) === "play again") {
+    } else if (pcChance(store.buttons) === "play again") {
       dispatch(setWinner("tie"));
       dispatch(setModal());
     }
-  }, [buttons]);
+  }, [store.buttons]);
 
   return (
     <div className={styles.grid}>
-      {buttons.map((m, i) => (
+      {store.buttons.map((m, i) => (
         <GridButton
           key={i}
           onClick={() => {
             if (m === null) {
-              changeButton(chance, i);
+              changeButtonRedux(chance, i);
               toggleChance();
             }
           }}

@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
   closeModal,
+  resetButtons,
+  resetScore,
   setChance,
   setInitialChance,
   setModal,
@@ -56,7 +58,8 @@ const Modal = ({ setButtons }) => {
               dispatch(setInitialChance(null));
               dispatch(setWinner(null));
               dispatch(closeModal());
-              setButtons(Array(9).fill(null));
+              dispatch(resetScore());
+              dispatch(resetButtons());
               navigate("/");
             }}
           >
@@ -67,7 +70,7 @@ const Modal = ({ setButtons }) => {
             onClick={() => {
               dispatch(setWinner(null));
               dispatch(closeModal());
-              setButtons(Array(9).fill(null));
+              dispatch(resetButtons());
               navigate("/play");
             }}
           >

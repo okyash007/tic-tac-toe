@@ -7,12 +7,17 @@ import refresh from "../assets/refresh.svg";
 import { Refresh } from "../styled";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../modal/Modal";
-import { incLose, incTies, incWins, setModal } from "../store/appSlice";
+import {
+  incLose,
+  incTies,
+  incWins,
+  setButtonsRedux,
+  setModal,
+} from "../store/appSlice";
 import { useNavigate } from "react-router-dom";
-import { crossOrCircle, pcChance } from "../helper";
+import { crossOrCircle } from "../helper";
 
 const Play = () => {
-  const [buttons, setButtons] = useState(Array(9).fill(null));
 
   const store = useSelector((store) => store.app);
   const modal = store.modal;
@@ -20,8 +25,10 @@ const Play = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+
+
   useEffect(() => {
-    if (!store.chance && !store.initialChance) {
+    if (!store.chance && !store.initialChance  ) {
       navigate("/");
     }
   }, []);
@@ -40,7 +47,7 @@ const Play = () => {
 
   return (
     <>
-      {modal && <Modal setButtons={setButtons} />}
+      {modal && <Modal  />}
       <div className={styles.box}>
         <div className={styles.top}>
           <div className={styles.icon}>
@@ -58,12 +65,13 @@ const Play = () => {
           chance={store.chance}
           initialChance={store.initialChance}
           winner={store.winner}
-          buttons={buttons}
-          setButtons={setButtons}
         />
         <div className={styles.bottom}>
           <div className={styles.win}>
-            <p> { store.initialChance === cross && 'X' } { store.initialChance === circle && 'O' } (YOU)</p>
+            <p>
+              {store.initialChance === cross && "X"}{" "}
+              {store.initialChance === circle && "O"} (YOU)
+            </p>
             <p className={styles.score}>{store.score.wins}</p>
           </div>
           <div className={styles.tie}>
@@ -71,7 +79,10 @@ const Play = () => {
             <p className={styles.score}>{store.score.ties}</p>
           </div>
           <div className={styles.lose}>
-            <p>{ store.initialChance === cross && 'O' } { store.initialChance === circle && 'X' }(CPU)</p>
+            <p>
+              {store.initialChance === cross && "O"}{" "}
+              {store.initialChance === circle && "X"}(CPU)
+            </p>
             <p className={styles.score}>{store.score.lose}</p>
           </div>
         </div>
