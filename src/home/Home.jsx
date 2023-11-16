@@ -10,7 +10,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (store.chance && store.initialChance) {
+    if (store.initialChance && store.chance ) {
       navigate("/play");
     }
   }, []);

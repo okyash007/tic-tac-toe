@@ -28,7 +28,7 @@ const Play = () => {
 
 
   useEffect(() => {
-    if (!store.chance && !store.initialChance  ) {
+    if (!store.chance && !store.initialChance   ) {
       navigate("/");
     }
   }, []);
