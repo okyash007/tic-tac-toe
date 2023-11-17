@@ -24,16 +24,59 @@ export function calcWinner(board) {
 }
 
 export function pcChance(board) {
+  const winningPositions = [
+    [0, 1, 2], // top row
+    [3, 4, 5], // middle row
+    [6, 7, 8], // bottom row
+    [0, 3, 6], // left column
+    [1, 4, 7], // middle column
+    [2, 5, 8], // right column
+    [0, 4, 8], // main diagonal
+    [2, 4, 6], // anti-diagonal
+  ];
+
   let nullIndices = [];
+  let filledIndices = [];
+
   for (let i = 0; i < board.length; i++) {
     if (board[i] === null) {
       nullIndices.push(i);
+    } else {
+      filledIndices.push(i);
     }
   }
+
   if (nullIndices.length === 0) {
     return "play again";
   }
-  let randomIndex = nullIndices[Math.floor(Math.random() * nullIndices.length)];
+
+  if (filledIndices.length >= 2) {
+    for (const positionSet of winningPositions) {
+      const [pos1, pos2, pos3] = positionSet;
+      if (
+        board[pos1] === board[pos2] &&
+        board[pos1] !== null &&
+        nullIndices.includes(pos3)
+      ) {
+        return pos3;
+      } else if (
+        board[pos1] === board[pos3] &&
+        board[pos1] !== null &&
+        nullIndices.includes(pos2)
+      ) {
+        return pos2;
+      } else if (
+        board[pos2] === board[pos3] &&
+        board[pos2] !== null &&
+        nullIndices.includes(pos1)
+      ) {
+        return pos1;
+      }
+    }
+  }
+
+  const randomIndex =
+    nullIndices[Math.floor(Math.random() * nullIndices.length)];
   return randomIndex;
 }
 
