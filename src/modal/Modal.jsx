@@ -2,32 +2,24 @@ import React from "react";
 import styles from "./modal.module.css";
 import { ColorButton, Heading } from "../styled";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
-  closeModal,
+  setModal,
   resetButtons,
   resetScore,
   setChance,
   setInitialChance,
-  setModal,
+  setLoading,
   setWinner,
 } from "../store/appSlice";
 import circle from "../assets/circle.svg";
 import cross from "../assets/cross.svg";
 import { crossOrCircle } from "../helper";
 
-const Modal = ({ setButtons }) => {
+const Modal = () => {
   const store = useSelector((store) => store.app);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // let color = null
-
-  // if (store.winner === circle) {
-  //   color = "#F2B237";
-  // } else if (store.winner === cross) {
-  //   color = "#32C4C3";
-  // }
 
   return (
     <div className={styles.box}>
@@ -46,7 +38,12 @@ const Modal = ({ setButtons }) => {
           {store.winner && store.winner !== "tie" && (
             <>
               <img src={store.winner} alt="" width={40} />
-              <Heading $color="#F2B237">takes the round</Heading>
+              {store.winner === circle && (
+                <Heading $color="#F2B237">takes the round</Heading>
+              )}
+              {store.winner === cross && (
+                <Heading $color="#31C4BE">takes the round</Heading>
+              )}
             </>
           )}
         </div>
@@ -57,25 +54,39 @@ const Modal = ({ setButtons }) => {
               dispatch(setChance(null));
               dispatch(setInitialChance(null));
               dispatch(setWinner(null));
-              dispatch(closeModal());
+              dispatch(setModal(false));
               dispatch(resetScore());
               dispatch(resetButtons());
+              dispatch(setLoading(false));
               navigate("/");
             }}
           >
             Quit
           </ColorButton>
-          <ColorButton
-            $bgColor="#31C4BE"
-            onClick={() => {
-              dispatch(setWinner(null));
-              dispatch(closeModal());
-              dispatch(resetButtons());
-              navigate("/play");
-            }}
-          >
-            Play Again
-          </ColorButton>
+          {!store.winner ? (
+            <ColorButton
+              $bgColor="#31C4BE"
+              onClick={() => {
+                dispatch(setWinner(null));
+                dispatch(setModal(false));
+                dispatch(resetButtons());
+                dispatch(resetScore());
+              }}
+            >
+              Play Again
+            </ColorButton>
+          ) : (
+            <ColorButton
+              $bgColor="#31C4BE"
+              onClick={() => {
+                dispatch(setWinner(null));
+                dispatch(setModal(false));
+                dispatch(resetButtons());
+              }}
+            >
+              Next round
+            </ColorButton>
+          )}
         </div>
       </div>
     </div>

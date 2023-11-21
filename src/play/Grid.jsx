@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./play.module.css";
 import { GridButton } from "../styled";
 import circle from "../assets/circle.svg";
 import cross from "../assets/cross.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  resetButtons,
   setButtonsRedux,
   setChance,
+  setLoading,
   setModal,
   setWinner,
 } from "../store/appSlice";
@@ -14,6 +16,8 @@ import { calcWinner, crossOrCircle, pcChance } from "../helper";
 
 const Grid = ({ chance, initialChance }) => {
   const store = useSelector((store) => store.app);
+  const winner = store.winner;
+  console.log(winner);
 
   const dispatch = useDispatch();
 
@@ -42,29 +46,31 @@ const Grid = ({ chance, initialChance }) => {
   useEffect(() => {
     if (calcWinner(store.buttons) !== null) {
       dispatch(setWinner(calcWinner(store.buttons)));
-      dispatch(setModal());
+      dispatch(setModal(true));
     } else if (pcChance(store.buttons) === "play again") {
       dispatch(setWinner("tie"));
-      dispatch(setModal());
+      dispatch(setModal(true));
     }
-  }, [store.buttons]);
+  }, [store.buttons, winner]);
 
   return (
-    <div className={styles.grid}>
-      {store.buttons.map((m, i) => (
-        <GridButton
-          key={i}
-          onClick={() => {
-            if (m === null) {
-              changeButtonRedux(chance, i);
-              toggleChance();
-            }
-          }}
-        >
-          {m && <img src={m} alt="" />}
-        </GridButton>
-      ))}
-    </div>
+    <>
+      <div className={styles.grid}>
+        {store.buttons.map((m, i) => (
+          <GridButton
+            key={i}
+            onClick={() => {
+              if (m === null) {
+                changeButtonRedux(chance, i);
+                toggleChance();
+              }
+            }}
+          >
+            {m && <img src={m} alt="" />}
+          </GridButton>
+        ))}
+      </div>
+    </>
   );
 };
 

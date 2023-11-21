@@ -7,6 +7,7 @@ const appSlice = createSlice({
   initialState: {
     buttons: JSON.parse(localStorage.getItem("buttons")) || Array(9).fill(null),
     modal: false,
+    loading: false,
     chance: JSON.parse(localStorage.getItem("initialChance")),
     initialChance: JSON.parse(localStorage.getItem("initialChance")),
     winner: null,
@@ -25,11 +26,11 @@ const appSlice = createSlice({
       state.buttons = Array(9).fill(null);
       localStorage.setItem("buttons", JSON.stringify(state.buttons));
     },
-    setModal: (state) => {
-      state.modal = true;
+    setModal: (state, action) => {
+      state.modal = action.payload;
     },
-    closeModal: (state) => {
-      state.modal = false;
+    setLoading: (state, action) => {
+      state.loading = action.payload;
     },
     setChance: (state, action) => {
       state.chance = action.payload;
@@ -70,10 +71,10 @@ const appSlice = createSlice({
 export const {
   setButtonsRedux,
   setModal,
+  setLoading,
   setChance,
   setWinner,
   setInitialChance,
-  closeModal,
   incWins,
   incTies,
   incLose,

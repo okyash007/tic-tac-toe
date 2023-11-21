@@ -15,7 +15,7 @@ export default function useQuote(url) {
 
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 1000);
+    const interval = setInterval(fetchData, 10000);
     return () => clearInterval(interval);
   }, [url]);
   return data;

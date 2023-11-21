@@ -16,19 +16,18 @@ import {
 } from "../store/appSlice";
 import { useNavigate } from "react-router-dom";
 import { crossOrCircle } from "../helper";
+import Loading from "../modal/Loading";
 
 const Play = () => {
-
   const store = useSelector((store) => store.app);
   const modal = store.modal;
+  const loading = store.loading;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
-
   useEffect(() => {
-    if (!store.chance && !store.initialChance   ) {
+    if (!store.chance && !store.initialChance) {
       navigate("/");
     }
   }, []);
@@ -47,7 +46,7 @@ const Play = () => {
 
   return (
     <>
-      {modal && <Modal  />}
+      {modal && <Modal />}
       <div className={styles.box}>
         <div className={styles.top}>
           <div className={styles.icon}>
@@ -55,9 +54,9 @@ const Play = () => {
             <img src={circle} alt="" />
           </div>
           <div className={styles.turn}>
-            <h3>TURN</h3>
+            <h3> {store.chance === circle ? "〇" : "✖ "} TURN</h3>
           </div>
-          <Refresh onClick={() => dispatch(setModal())}>
+          <Refresh onClick={() => dispatch(setModal(true))}>
             <img src={refresh} alt="" />
           </Refresh>
         </div>
