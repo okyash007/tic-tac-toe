@@ -47,6 +47,7 @@ const Play = () => {
   return (
     <>
       {modal && <Modal />}
+      {(loading && !store.winner) && <Loading />}
       <div className={styles.box}>
         <div className={styles.top}>
           <div className={styles.icon}>

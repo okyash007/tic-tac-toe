@@ -37,9 +37,14 @@ const Grid = ({ chance, initialChance }) => {
 
   useEffect(() => {
     if (chance === crossOrCircle(initialChance)) {
-      const pcIndex = pcChance(store.buttons);
-      changeButtonRedux(chance, pcIndex);
-      toggleChance();
+      dispatch(setLoading(true))
+      const timer = setTimeout(() => {
+        const pcIndex = pcChance(store.buttons);
+        changeButtonRedux(chance, pcIndex);
+        toggleChance();
+        dispatch(setLoading(false))
+      }, 100);
+      return () => clearTimeout(timer);
     }
   }, [chance]);
 
